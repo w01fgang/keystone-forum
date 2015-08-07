@@ -1,7 +1,7 @@
 var keystone = require('keystone'),
 	_ = require('underscore'),
 	async = require('async'),
-	globals = require('../../lib/globals'),
+	global = require('../../lib/global'),
 	Topic = keystone.list('Topic');
 
 exports = module.exports = function(req, res) {
@@ -10,7 +10,7 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 	
 	locals.section = 'forum';
-	locals.current.filter = _.where(globals.forum.filters, { value: req.params.filter })[0] || _.where(globals.forum.filters, { value: 'newest' })[0];
+	locals.current.filter = _.where(global.forum.filters, { value: req.params.filter })[0] || _.where(global.forum.filters, { value: 'newest' })[0];
 	locals.current.tag = _.where(req.tags, { key: req.params.tag })[0];
 	
 	

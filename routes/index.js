@@ -1,6 +1,6 @@
 var keystone = require('keystone'),
 	_ = require('underscore'),
-	globals = require('../lib/globals'),
+	global = require('../lib/global'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname);
 
@@ -35,40 +35,40 @@ var routes = {
 
 // Bind Routes
 exports = module.exports = function(app) {
-	
+
 	app.get('/*', middleware.verifyUser);
-	
+
 	// Forum
 	app.get('/', routes.views.index);
-	app.get('/' + globals.forum.routePatterns.filters + '/:tag?', routes.views.index);
-	
+	app.get('/' + global.forum.routePatterns.filters + '/:tag?', routes.views.index);
+
 	app.all('/topic/:topic', routes.views.topic);
-	
-	
+
+
 	// Session
 	app.all('/join', routes.views.join);
 	app.all('/login', routes.views.signin);
 	app.get('/signout', routes.views.signout);
 	app.all('/forgot-password', routes.views['forgot-password']);
 	app.all('/reset-password/:key', routes.views['reset-password']);
-	
-	
+
+
 	// Authentication
 	app.all('/auth/confirm', routes.auth.confirm);
 	app.all('/auth/verify', routes.auth.verify);
 	app.get('/auth/:service', routes.auth.service);
-	
-	
+
+
 	// User
 	app.all('/settings*', middleware.requireUser);
 	app.all('/settings', routes.views.settings);
-	
+
 	app.all('/new-topic', middleware.requireUser);
 	app.all('/new-topic', routes.views['new-topic']);
-	
+
 	app.all('/profile/:profile', routes.views.profile);
-	
-	
+
+
 	// Test Emails
 	app.get('/email/:key', routes.dev.email);
 

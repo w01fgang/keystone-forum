@@ -66,7 +66,7 @@ keystone.set('routes', require('./routes'));
 
 keystone.set('locals', {
 	_: require('underscore'),
-	globals: require('./lib/globals'),
+	global: require('./lib/global'),
 	js: 'javascript:;',
 	env: keystone.get('env'),
 	utils: keystone.utils,
